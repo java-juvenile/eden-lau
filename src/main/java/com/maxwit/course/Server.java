@@ -14,12 +14,14 @@ public class Server {
 
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
         DataInputStream dis = new DataInputStream(socket.getInputStream());
+        String[] list = dis.readUTF().split(" ");
+        String requesString = list[1];
+        File file = new File("." + requesString);
 
-        File file = new File("." + dis.readUTF());
-
-        dos.writeLong(file.length());
         dos.writeUTF(file.getName());
+        String response = "HTTP/1.1 200 OK\n";
 
+        dos.writeBytes(response);
         DataInputStream filedis = new DataInputStream(new FileInputStream(file));
         byte[] b = new byte[1024];
         int i;
@@ -35,4 +37,3 @@ public class Server {
         serverSocket.close();
     }
 }
-

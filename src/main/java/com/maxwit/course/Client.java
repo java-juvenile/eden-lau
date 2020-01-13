@@ -15,21 +15,20 @@ public class Client {
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
        
-        String requesPath = args[2];
-        dos.writeUTF(requesPath);
+        String requesString = "GET " + args[1] + " HTTP/1.1";
+        dos.writeUTF(requesString);
 
-        double length = dis.readLong();
         String filename = dis.readUTF();
 
         File file = new File(filename);
         DataOutputStream filedos = new DataOutputStream(new FileOutputStream(file));
+
         byte[] b = new byte[1024];
         int i;
         double curLen = 0.0;
         while ((i = dis.read(b)) > 0) {
             filedos.write(b, 0, i);
             curLen += i;
-            System.out.println("传输进度: " + (curLen / length * 100) + "%");
         }
         dos.flush();
 
@@ -39,4 +38,3 @@ public class Client {
         socket.close();
     }
 }
-
