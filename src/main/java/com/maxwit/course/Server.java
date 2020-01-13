@@ -32,6 +32,7 @@ public class Server {
         dos.close();
         dis.close();
         socket.close();
-
+        serverSocket.close();
     }
 }
+

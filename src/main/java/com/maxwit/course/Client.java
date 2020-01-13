@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.Socket;
 
-
 public class Client {
     public static void main(String[] args) throws Exception {
         String[] list = args[0].split(":");
@@ -40,3 +39,4 @@ public class Client {
         socket.close();
     }
 }
+
