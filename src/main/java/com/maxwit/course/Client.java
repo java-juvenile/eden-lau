@@ -3,7 +3,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
+
 
 public class Client {
     public static void main(String[] args) throws Exception {
@@ -15,13 +15,13 @@ public class Client {
         DataInputStream dis = new DataInputStream(socket.getInputStream());
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-        dos.writeUTF(line);
+       
+        String requesPath = args[2];
+        dos.writeUTF(requesPath);
 
         double length = dis.readLong();
         String filename = dis.readUTF();
-        
+
         File file = new File(filename);
         DataOutputStream filedos = new DataOutputStream(new FileOutputStream(file));
         byte[] b = new byte[1024];

@@ -15,10 +15,11 @@ public class Server {
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
         DataInputStream dis = new DataInputStream(socket.getInputStream());
 
-        File file = new File(dis.readUTF().replaceAll("mycurl ", "."));
+        File file = new File("." + dis.readUTF());
+
         dos.writeLong(file.length());
         dos.writeUTF(file.getName());
-        
+
         DataInputStream filedis = new DataInputStream(new FileInputStream(file));
         byte[] b = new byte[1024];
         int i;
