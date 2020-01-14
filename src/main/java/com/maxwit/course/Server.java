@@ -7,15 +7,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Server {
 
     public void readFile(DataOutputStream dos, String response, File file) throws IOException {
 
         dos.writeBytes(response);
-        String responseString = "Server: Apache/2.2.14\n" + "Content-Type: text/html; charset=UTF-8\n"
-                + "Content-Length:" + file.length() + "\n\n";
-        dos.writeBytes(responseString);
+        Map<String,String> map = new HashMap<>();
+        map.put("Content-Length: ", file.length() + "");
+        map.forEach((key, value) -> {
+            try {
+                dos.writeBytes(key + value + "\n");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        });
+        dos.writeBytes("\n");
         DataInputStream filedis = new DataInputStream(new FileInputStream(file));
         byte[] b = new byte[1024];
         int i;
